@@ -1,0 +1,12 @@
+@import '~antd/dist/reset.css';
+@import url("https://fonts.googleapis.com/css?family=Montserrat:200,300,400,700,900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @import '~/components/Layouts/Header/header.module.scss'; */
+@layer utilities {
+
+  /* Css at Home Page  */
+
+}

@@ -15,7 +15,6 @@ export default function AuthProvider({ children }) {
         const unSubscibed = onAuthStateChanged(auth, (user) => {
 
             if (user) {
-                console.log('check-1')
                 const { displayName, Uid, email, photoURL } = user;
                 setUser({
                     displayName, Uid, email, photoURL,
@@ -23,11 +22,10 @@ export default function AuthProvider({ children }) {
 
                 setIsloading(false)
                 
-                history('/ChatRoom')
-                console.log('check-2')
-            } else {
-                history('/Logout')
-            }
+                history('/')
+            } 
+            else
+                history('/Login')
 
         })
         return () => {
@@ -37,7 +35,10 @@ export default function AuthProvider({ children }) {
 
     return (
         <AuthContext.Provider value={{ user }}>
-            {isloading ? <Spin/> : children}
+            {
+                isloading ? <Spin/> : children
+                // isloading && children
+            }
         </AuthContext.Provider>
     )
 }

@@ -11,8 +11,8 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route element={<Login />} path='/Login' />
-          <Route element={<ChatRoom />} path='/ChatRoom' />
+          <Route element={<Login />} path='/login' />
+          <Route element={<ChatRoom />} path='/' />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

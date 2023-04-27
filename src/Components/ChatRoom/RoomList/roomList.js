@@ -1,32 +1,46 @@
-import { Collapse, Typography } from 'antd'
+import { Button, Collapse, Typography } from 'antd'
 import React from 'react'
 import styles from './roomList.module.scss'
 import classNames from 'classnames/bind'
-import styled from 'styled-component'
+import styled from 'styled-components'
+import { PlusSquareOutlined } from '@ant-design/icons'
 
 const cx = classNames.bind(styles)
 const { Panel } = Collapse
 
-const panelStyled = styled(Panel)`
+const PanelStyled = styled(Panel)`
   &&& {
-    .ant-collapse-headr, p {
+    .ant-collapse-header, p {
       color: white;
     }
 
     .ant-collapse-content-box {
       padding: 0 40px; 
     }
+
+    .add-room {
+      color: white;
+      padding: 0 ;
+      
+    }
   }
-`
+`;
+
+const LinkStyled = styled(Typography.Link)`
+  display: block;
+  margin-bottom:5px;
+  color: white;
+`;
 
 export default function RoomList() {
   return (
     <Collapse ghost defaultActiveKey={['1']}>
-      <Collapse className={cx('')} header="List of Room" key='1'>
-        <Typography.Link>Room 1</Typography.Link>
-        <Typography.Link>Room 2</Typography.Link>
-        <Typography.Link>Room 3</Typography.Link>
-      </Collapse>
+      <PanelStyled  header="List of Room" key='1'>
+        <LinkStyled>Room 1</LinkStyled>
+        <LinkStyled>Room 2</LinkStyled>
+        <LinkStyled>Room 3</LinkStyled>
+        <Button type='text' icon={<PlusSquareOutlined/>} className={cx('add-room')}>Add Room</Button>
+      </PanelStyled>
     </Collapse>
   )
 }

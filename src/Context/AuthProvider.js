@@ -9,7 +9,7 @@ export const AuthContext = createContext();
 export default function AuthProvider({ children }) {
     const history = useNavigate();
     const [user, setUser] = useState({});
-    const [isloading, setIsloading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         const unSubscibed = onAuthStateChanged(auth, (user) => {
@@ -20,13 +20,14 @@ export default function AuthProvider({ children }) {
                     displayName, Uid, email, photoURL,
                 })
 
-                setIsloading(false)
-                
-                history('/')
-            } 
-            else
-                history('/Login')
+                setIsLoading(false)
 
+                history('/')
+            }
+            else {
+                setIsLoading(false)
+                history('/Login')
+            }
         })
         return () => {
             unSubscibed();
@@ -35,10 +36,7 @@ export default function AuthProvider({ children }) {
 
     return (
         <AuthContext.Provider value={{ user }}>
-            {
-                isloading ? <Spin/> : children
-                // isloading && children
-            }
+            {isLoading ? <Spin /> : children}
         </AuthContext.Provider>
     )
 }

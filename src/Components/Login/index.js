@@ -3,15 +3,24 @@ import React from 'react'
 import { Row, Col, Button, Typography } from 'antd'
 import styles from './Login.module.scss'
 import classNames from 'classnames'
-import  {auth, FacebookAuthProvider, signInWithPopup} from "~/Firebase/config.js"
+import  {auth, db, FacebookAuthProvider, signInWithPopup} from "~/Firebase/config.js"
 
 const cx = classNames.bind(styles)
 const {Title} = Typography
 var fbProvider = new FacebookAuthProvider(auth);
 
 export default function Login() {
-    const handleLogin = () => {
-        signInWithPopup(auth, fbProvider)
+    const handleFbLogin = async () => {
+        const { additionalUserInfo, user} = await signInWithPopup(auth, fbProvider)
+
+        if(additionalUserInfo?.isNewUser) {
+            db.collection('users').add({
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+                uid: user.displayName,
+                providerID: additionalUserInfo.providerID
+            })
+        }
     }
     
     return (
@@ -26,7 +35,7 @@ export default function Login() {
                         Login by Google
                     </Button >
 
-                    <Button className={cx('w-full mb-2')} onClick={handleLogin}>
+                    <Button className={cx('w-full mb-2')} onClick={handleFbLogin}>
                         Login by Facebook
                     </Button>
                 </Col>

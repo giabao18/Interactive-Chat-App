@@ -16,7 +16,7 @@ export default function UserInfo() {
         <Avatar>Bao</Avatar>
         <Typography.Text className={cx('user_Name')}></Typography.Text>
       </div>
-      <Button onClick={() => auth.signOut} ghost>Log Out</Button>
+      <Button onClick={() => auth.signOut()} ghost>Log Out</Button>
     </div>
   )
 }

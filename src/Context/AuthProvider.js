@@ -26,7 +26,7 @@ export default function AuthProvider({ children }) {
             }
             else {
                 setIsLoading(false)
-                history('/Login')
+                history('/login')
             }
         })
         return () => {

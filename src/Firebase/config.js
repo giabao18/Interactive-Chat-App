@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, collection, doc, getDoc, setDoc, addDoc, serverTimestamp, FieldValue } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth, FacebookAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { getAuth, FacebookAuthProvider, signInWithPopup, onAuthStateChanged, getAdditionalUserInfo } from "firebase/auth";
 
 
 
@@ -31,4 +31,9 @@ const db = getFirestore(app);
 
 
 
-export { db, auth, FacebookAuthProvider,signInWithPopup , onAuthStateChanged};
+export {
+    db, collection, doc, getDoc, setDoc, addDoc,
+    auth, FacebookAuthProvider,
+    signInWithPopup, onAuthStateChanged, getAdditionalUserInfo,
+    FieldValue, serverTimestamp
+};

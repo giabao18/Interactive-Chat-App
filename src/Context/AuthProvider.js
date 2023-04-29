@@ -19,9 +19,7 @@ export default function AuthProvider({ children }) {
                 setUser({
                     displayName, Uid, email, photoURL,
                 })
-
                 setIsLoading(false)
-
                 history('/')
             }
             else {

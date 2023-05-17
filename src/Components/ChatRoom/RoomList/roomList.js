@@ -1,9 +1,11 @@
 import { Button, Collapse, Typography } from 'antd'
-import React from 'react'
+import React, { useContext, useMemo } from 'react'
 import styles from './roomList.module.scss'
 import classNames from 'classnames/bind'
 import styled from 'styled-components'
 import { PlusSquareOutlined } from '@ant-design/icons'
+import useFirestore from '~/hook/useFirestore'
+import { AppContext } from '~/Context/AppProvider'
 
 const cx = classNames.bind(styles)
 const { Panel } = Collapse
@@ -33,12 +35,15 @@ const LinkStyled = styled(Typography.Link)`
 `;
 
 export default function RoomList() {
+
+  const {rooms} = useContext(AppContext)
+  console.log(rooms)
   return (
     <Collapse ghost defaultActiveKey={['1']}>
       <PanelStyled  header="List of Room" key='1'>
-        <LinkStyled>Room 1</LinkStyled>
-        <LinkStyled>Room 2</LinkStyled>
-        <LinkStyled>Room 3</LinkStyled>
+        {rooms.map(room => {
+          <LinkStyled key={room.uid}>{room}</LinkStyled>
+        })}
         <Button type='text' icon={<PlusSquareOutlined/>} className={cx('add-room')}>Add Room</Button>
       </PanelStyled>
     </Collapse>

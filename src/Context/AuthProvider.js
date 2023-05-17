@@ -15,10 +15,11 @@ export default function AuthProvider({ children }) {
         const unSubscibed = onAuthStateChanged(auth, (user) => {
 
             if (user) {
-                const { displayName, Uid, email, photoURL } = user;
+                const { displayName, uid, email, photoURL } = user;
                 setUser({
-                    displayName, Uid, email, photoURL,
+                    displayName, uid, email, photoURL,
                 })
+
                 setIsLoading(false)
                 history('/')
             }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col } from 'antd'
 import RoomList from '../RoomList/roomList'
-import UserInfo from '../User/userInfo'
+import UserInfo from '../UserInfo/userInfo'
 import styles from './Sidebar.module.scss'
 import classNames from 'classnames/bind'
 

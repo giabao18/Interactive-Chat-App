@@ -3,30 +3,33 @@ import React from 'react'
 import { Row, Col, Button, Typography } from 'antd'
 import styles from './Login.module.scss'
 import classNames from 'classnames'
-import  {auth, db, FacebookAuthProvider, signInWithPopup, getAdditionalUserInfo, collection, doc, getDoc, addDoc} from "~/Firebase/config.js"
-import { add } from 'lodash'
+import { query, auth, db, FacebookAuthProvider, signInWithPopup, getAdditionalUserInfo, collection, doc, getDoc, addDoc } from "~/Firebase/config.js"
 import { addDocument } from '~/Firebase/service'
 
 const cx = classNames.bind(styles)
-const {Title} = Typography
+const { Title } = Typography
 var fbProvider = new FacebookAuthProvider(auth);
 
 export default function Login() {
     const handleFbLogin = async () => {
+
+
         const userCheck = await signInWithPopup(auth, fbProvider)
-        const {user, providerId} = userCheck
-        if(getAdditionalUserInfo(userCheck).isNewUser) {
-            console.log(user)
 
-            // await addDoc(collection(db, 'users'), {
-            //     displayName: user.displayName,
-            //     photoURL: user.photoURL,
-            //     uid: user.uid,
-            //     providerId: providerId
-            // })
-            
+        if (getAdditionalUserInfo(userCheck).isNewUser) {
+            const { user, providerId } = userCheck
+            const Collection = collection(db, 'users')
+            // const addDocument = async () => {
+            //     await addDoc(Collection, {
+            //         displayName: user.displayName,
+            //         photoURL: user.photoURL,
+            //         uid: user.uid,
+            //         providerId: providerId,
+            //         createdAt: serverTimestamp(),
+            //     })
+            // }
 
-            addDocument('user', {
+            addDocument('users', {
                 displayName: user.displayName,
                 photoURL: user.photoURL,
                 uid: user.uid,
@@ -35,7 +38,7 @@ export default function Login() {
 
         }
     }
-    
+
     return (
         <div>
             <Row className={cx('justify-center')}>

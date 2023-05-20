@@ -1,22 +1,26 @@
 import { row, column, Button, Avatar, Tooltip, Form, Input } from 'antd'
-import React from 'react'
+import React, { useContext, useMemo } from 'react'
 import styles from './chatWindow.module.scss'
 import { UserAddOutlined } from '@ant-design/icons'
 import classNames from 'classnames/bind'
 import Message from './Message/message'
+import { AppContext } from '~/Context/AppProvider'
 
 const cx = classNames.bind(styles)
 
 
 export default function ChatWindow() {
+  const { selectedRoom } = useContext(AppContext)
+
+
   return (
     <div className={cx('chatWindow_wrapper')}>
 
       <div className={cx('chatWindow_header')}>
 
         <div className={cx('chatWindow_header__info')}>
-          <p className={cx('chatWindow_header__title')}>Room 1</p>
-          <span className={cx('chatWindow_header__description')}>It is Room 1</span>
+          <p className={cx('chatWindow_header__title')}></p>
+          <span className={cx('chatWindow_header__description')}></span>
         </div>
 
         <div className={cx('chatWindow_header__group')}>

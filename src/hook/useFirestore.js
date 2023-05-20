@@ -8,7 +8,7 @@ const useFireStore = (collect, condition) => {
 
     const [documents, setDocuments] = useState([])
     useEffect(() => {
-        let collectionRef = collection(db, collect);
+        
         if (condition) {
 
             if (!condition.compareValue || !condition.compareValue.length) {
@@ -40,7 +40,7 @@ const useFireStore = (collect, condition) => {
         //     .catch((err) => {
         //         console.error("error getting")
         //     })
-        const unSubscibed = onSnapshot(collectionRef, (querySnapshot) => {
+        const unSubscibed = onSnapshot(collection(db,collect), (querySnapshot) => {
             const list = []
             querySnapshot.forEach((doc) => (
                 list.push({

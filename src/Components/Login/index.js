@@ -3,7 +3,7 @@ import React from 'react'
 import { Row, Col, Button, Typography } from 'antd'
 import styles from './Login.module.scss'
 import classNames from 'classnames'
-import { query, auth, db, FacebookAuthProvider, signInWithPopup, getAdditionalUserInfo, collection, doc, getDoc, addDoc } from "~/Firebase/config.js"
+import { serverTimestamp, query, auth, db, FacebookAuthProvider, signInWithPopup, getAdditionalUserInfo, collection, doc, getDoc, addDoc } from "~/Firebase/config.js"
 import { addDocument } from '~/Firebase/service'
 
 const cx = classNames.bind(styles)
@@ -18,16 +18,14 @@ export default function Login() {
 
         if (getAdditionalUserInfo(userCheck).isNewUser) {
             const { user, providerId } = userCheck
-            const Collection = collection(db, 'users')
-            // const addDocument = async () => {
-            //     await addDoc(Collection, {
-            //         displayName: user.displayName,
-            //         photoURL: user.photoURL,
-            //         uid: user.uid,
-            //         providerId: providerId,
-            //         createdAt: serverTimestamp(),
-            //     })
-            // }
+
+            // addDoc(collection(db, 'users'), {
+            //     displayName: user.displayName,
+            //     photoURL: user.photoURL,
+            //     uid: user.uid,
+            //     providerId: providerId,
+            //     createdAt: serverTimestamp(),
+            // })
 
             addDocument('users', {
                 displayName: user.displayName,
@@ -35,10 +33,9 @@ export default function Login() {
                 uid: user.uid,
                 providerId: providerId
             })
-
         }
-    }
 
+    }
     return (
         <div>
             <Row className={cx('justify-center')}>
@@ -59,4 +56,5 @@ export default function Login() {
         </div>
     )
 }
+
 

@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { PlusSquareOutlined } from '@ant-design/icons'
 import useFirestore from '~/hook/useFirestore'
 import { AppContext } from '~/Context/AppProvider'
+import AddRoomModal from '~/Components/Modals/addRoomModal'
 
 const cx = classNames.bind(styles)
 const { Panel } = Collapse
@@ -36,16 +37,20 @@ const LinkStyled = styled(Typography.Link)`
 
 export default function RoomList() {
 
-  const {rooms} = useContext(AppContext)
-  console.log(rooms)
+  const { rooms, setIsAddRoomVisible, setSelectedRoomID } = useContext(AppContext)
+
+  const handleAddRoom = () => {
+    setIsAddRoomVisible(true);
+  }
+
   return (
     <Collapse ghost defaultActiveKey={['1']}>
-      <PanelStyled  header="List of Room" key='1'>
-        {rooms.map(room => {
-          <LinkStyled key={room.uid}>{room}</LinkStyled>
-        })}
-        <Button type='text' icon={<PlusSquareOutlined/>} className={cx('add-room')}>Add Room</Button>
+      <PanelStyled header="List of Room" key='1'>
+        {rooms.map((room) =>
+          <LinkStyled key={room.id} onClick={() => setSelectedRoomID(room.id)}> {room.name} </LinkStyled>
+        )}
+        <Button type='text' icon={<PlusSquareOutlined />} onClick={handleAddRoom} className={cx('add-room')}>Add Room</Button>
       </PanelStyled>
-    </Collapse>
+    </Collapse >
   )
 }

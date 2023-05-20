@@ -1,8 +1,8 @@
-import { setDoc, getDatabase, db,collection,addDoc, FieldValue, serverTimestamp, doc } from './config'
+import { setDoc, getDatabase, db, collection, addDoc, FieldValue, serverTimestamp, doc } from './config'
 
-export const addDocument = async (collections, data) => {
-    const Collections = collection(db,collection)
-    await addDoc(Collections, {
+export const addDocument = (collections, data) => {
+
+    addDoc(collection(db, collections), {
         ...data,
         createdAt: serverTimestamp()
     })

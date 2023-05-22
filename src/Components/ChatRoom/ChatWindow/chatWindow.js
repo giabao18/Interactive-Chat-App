@@ -1,4 +1,4 @@
-import { row, column, Button, Avatar, Tooltip, Form, Input } from 'antd'
+import { row, column, Button, Avatar, Tooltip, Form, Input, Alert } from 'antd'
 import React, { useContext, useMemo } from 'react'
 import styles from './chatWindow.module.scss'
 import { UserAddOutlined } from '@ant-design/icons'
@@ -10,61 +10,53 @@ const cx = classNames.bind(styles)
 
 
 export default function ChatWindow() {
-  const { selectedRoom } = useContext(AppContext)
-
+  const { selectedRoom, members } = useContext(AppContext)
 
   return (
     <div className={cx('chatWindow_wrapper')}>
 
-      <div className={cx('chatWindow_header')}>
+      {selectedRoom.id ? (
+        <>
+          <div className={cx('chatWindow_header')}>
 
-        <div className={cx('chatWindow_header__info')}>
-          <p className={cx('chatWindow_header__title')}></p>
-          <span className={cx('chatWindow_header__description')}></span>
-        </div>
+            <div className={cx('chatWindow_header__info')}>
+              <p className={cx('chatWindow_header__title')}>{selectedRoom.name}</p>
+              <span className={cx('chatWindow_header__description')}>{selectedRoom.description}</span>
+            </div>
 
-        <div className={cx('chatWindow_header__group')}>
-          <Button icon={<UserAddOutlined />} type='text'>Invite</Button>
-          <Avatar.Group size="small" maxCount={2}>
-            <Tooltip title="A">
-              <Avatar>A</Avatar>
-            </Tooltip>
+            <div className={cx('chatWindow_header__group')}>
+              <Button icon={<UserAddOutlined />} type='text'>Invite</Button>
+              <Avatar.Group size="small" maxCount={2}>
+                {members.map(member =>
+                  <Tooltip title={member.displayName} key={member.id}>
+                    <Avatar src={member.photoURL}>{member.photoURL}{member.photoURL ? '' : member.displayName?.charAt(0)?.toUpperCase()}</Avatar>
+                  </Tooltip>
+                )}
+              </Avatar.Group>
+            </div>
 
-            <Tooltip title="B">
-              <Avatar>A</Avatar>
-            </Tooltip>
-
-            <Tooltip title="C">
-              <Avatar>A</Avatar>
-            </Tooltip>
-
-            <Tooltip title="D">
-              <Avatar>A</Avatar>
-            </Tooltip>
-          </Avatar.Group>
-        </div>
-
-      </div>
+          </div>
 
 
-      <div className={cx('chatWindow_content')}>
+          <div className={cx('chatWindow_content')}>
 
-        <div className={cx('chatWindow_content__messageList')}>
-          <Message text='test' photoURL={null} displayName="Gia Bao" createdAt={123} />
-          <Message text='test' photoURL={null} displayName="Gia Bao" createdAt={123} />
-          <Message text='test' photoURL={null} displayName="Gia Bao" createdAt={123} />
-          <Message text='test' photoURL={null} displayName="Gia Bao" createdAt={123} />
-        </div>
+            <div className={cx('chatWindow_content__messageList')}>
+              <Message text='test' photoURL={null} displayName="Gia Bao" createdAt={123} />
+              <Message text='test' photoURL={null} displayName="Gia Bao" createdAt={123} />
+              <Message text='test' photoURL={null} displayName="Gia Bao" createdAt={123} />
+              <Message text='test' photoURL={null} displayName="Gia Bao" createdAt={123} />
+            </div>
 
-        <Form className='chatWindow_content__form'>
-          <Form.Item className='chatWindow_content__form__item'>
-            <Input placeholder='Input text' bordered={false} autoComplete='off' />
-            <Button type='primary'>add</Button>
-          </Form.Item>
-        </Form>
-
-      </div>
-
+            <Form className='chatWindow_content__form'>
+              <Form.Item className='chatWindow_content__form__item'>
+                <Input placeholder='Input text' bordered={false} autoComplete='off' />
+                <Button type='primary'>add</Button>
+              </Form.Item>
+            </Form>
+          </div>
+        </>) : (
+        <Alert message={"Choose Room"} showIcon type='info' style={{ margin: 5 }} closable />
+      )}
     </div>
   )
 }

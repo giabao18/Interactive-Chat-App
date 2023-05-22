@@ -7,20 +7,19 @@ import { db, collection, where, query, orderBy } from "~/Firebase/config";
 const useFireStore = (collect, condition) => {
 
     const [documents, setDocuments] = useState([])
+    console.log(condition.compareValue)
     useEffect(() => {
-        
-        if (condition) {
+        let collectionRef = query(collection(db, collect), orderBy("createdAt"))
 
+        if (condition) {
             if (!condition.compareValue || !condition.compareValue.length) {
+                setDocuments([])
                 return
             }
+                // query doc depend on condition
+                collectionRef = query(collectionRef, where(condition.fieldName, condition.operator, condition.compareValue))
+            
 
-            // temp = query(collectionRef, where(
-            //     condition.fieldName,
-            //     condition.operator,
-            //     condition.compareValue,
-            // ))
-            // {collectionRef : { fi}}
 
         }
 
@@ -40,7 +39,9 @@ const useFireStore = (collect, condition) => {
         //     .catch((err) => {
         //         console.error("error getting")
         //     })
-        const unSubscibed = onSnapshot(collection(db,collect), (querySnapshot) => {
+
+
+        const unSubscibed = onSnapshot(collectionRef, (querySnapshot) => {
             const list = []
             querySnapshot.forEach((doc) => (
                 list.push({
@@ -48,6 +49,7 @@ const useFireStore = (collect, condition) => {
                     id: doc.id,
                 })
             ))
+            console.log(list)
             setDocuments(list)
         })
 

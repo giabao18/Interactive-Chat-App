@@ -7,20 +7,17 @@ import { db, collection, where, query, orderBy } from "~/Firebase/config";
 const useFireStore = (collect, condition) => {
 
     const [documents, setDocuments] = useState([])
-    console.log(condition.compareValue)
     useEffect(() => {
         let collectionRef = query(collection(db, collect), orderBy("createdAt"))
-
+        
         if (condition) {
-            if (!condition.compareValue || !condition.compareValue.length) {
+            if (!condition.compareValues || !condition.compareValues.length) {
                 setDocuments([])
                 return
             }
-                // query doc depend on condition
-                collectionRef = query(collectionRef, where(condition.fieldName, condition.operator, condition.compareValue))
-            
-
-
+            // query doc depend on condition
+            query(collectionRef, where(condition.fieldName, condition.operator, condition.compareValues))
+            console.log(collectionRef)
         }
 
 
@@ -49,7 +46,6 @@ const useFireStore = (collect, condition) => {
                     id: doc.id,
                 })
             ))
-            console.log(list)
             setDocuments(list)
         })
 

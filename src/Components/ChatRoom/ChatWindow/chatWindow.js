@@ -11,7 +11,8 @@ const cx = classNames.bind(styles)
 
 export default function ChatWindow() {
   const { selectedRoom, members } = useContext(AppContext)
-
+  
+  console.log(members)
   return (
     <div className={cx('chatWindow_wrapper')}>
 

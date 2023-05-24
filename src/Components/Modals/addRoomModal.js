@@ -12,7 +12,7 @@ export default function AddRoomModal() {
 
     // Add room Ok
     const handleOk = () => {
-        addDocument('rooms', { ...form.getFieldValue(), members: ['currentUid'] })
+        addDocument('rooms', { ...form.getFieldValue(), members: [uid] })
         form.resetFields()
         setIsAddRoomVisible(false)
     }

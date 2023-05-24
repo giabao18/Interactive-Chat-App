@@ -19,13 +19,13 @@ export default function AppProvider({ children }) {
         return {
             fieldName: 'members',
             operator: 'array-contains',
-            compareValue: uid,
+            compareValues: uid,
         }
     }, [uid])
 
     const rooms = useFireStore('rooms', roomsCondition)
 
-
+    
     // user select room
     const selectedRoom = useMemo(() =>
         rooms.find((room) => room.id === selectedRoomID) || {}
@@ -40,9 +40,7 @@ export default function AppProvider({ children }) {
         }
     }, [selectedRoom.members, selectedRoom])
 
-
     const members = useFireStore('users', userCondition)
-    console.log(members)
 
     return (
         <AppContext.Provider value={{ members, selectedRoom, rooms, isAddRoomVisible, setIsAddRoomVisible, selectedRoomID, setSelectedRoomID }}>

@@ -9,26 +9,24 @@ export const AuthContext = createContext();
 export default function AuthProvider({ children }) {
     const history = useNavigate();
     const [user, setUser] = useState({});
-    const [isloading, setIsloading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         const unSubscibed = onAuthStateChanged(auth, (user) => {
 
             if (user) {
-                console.log('check-1')
-                const { displayName, Uid, email, photoURL } = user;
+                const { displayName, uid, email, photoURL } = user;
                 setUser({
-                    displayName, Uid, email, photoURL,
+                    displayName, uid, email, photoURL,
                 })
 
-                setIsloading(false)
-                
-                history('/ChatRoom')
-                console.log('check-2')
-            } else {
-                history('/Logout')
+                setIsLoading(false)
+                history('/')
             }
-
+            else {
+                setIsLoading(false)
+                history('/login')
+            }
         })
         return () => {
             unSubscibed();
@@ -37,7 +35,7 @@ export default function AuthProvider({ children }) {
 
     return (
         <AuthContext.Provider value={{ user }}>
-            {isloading ? <Spin/> : children}
+            {isLoading ? <Spin /> : children}
         </AuthContext.Provider>
     )
 }

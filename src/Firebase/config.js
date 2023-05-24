@@ -1,8 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, collection, doc, getDocs, setDoc, addDoc, serverTimestamp, FieldValue, where, orderBy, query } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth, FacebookAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { getDatabase, connectDatabaseEmulator} from "firebase/database"
+import { getAuth, FacebookAuthProvider, signInWithPopup, onAuthStateChanged, getAdditionalUserInfo, connectAuthEmulator } from "firebase/auth";
 
 
 
@@ -28,7 +29,15 @@ const auth = getAuth()
 // Initialize Service
 const db = getFirestore(app);
 
+// connectAuthEmulator(auth,'http://localhost:9099')
+// if(window.location.hostname === 'localhost') {
+//     connectDatabaseEmulator(db, 'localhost', 8080)
+// }
 
 
-
-export { db, auth, FacebookAuthProvider,signInWithPopup , onAuthStateChanged};
+export {
+    query, where, orderBy, db, collection, doc, getDocs, setDoc, addDoc,
+    auth, FacebookAuthProvider,
+    signInWithPopup, onAuthStateChanged, getAdditionalUserInfo,
+    FieldValue, serverTimestamp, getDatabase
+};  

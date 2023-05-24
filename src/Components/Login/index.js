@@ -3,17 +3,40 @@ import React from 'react'
 import { Row, Col, Button, Typography } from 'antd'
 import styles from './Login.module.scss'
 import classNames from 'classnames'
-import  {auth, FacebookAuthProvider, signInWithPopup} from "~/Firebase/config.js"
+import { serverTimestamp, query, auth, db, FacebookAuthProvider, signInWithPopup, getAdditionalUserInfo, collection, doc, getDoc, addDoc } from "~/Firebase/config.js"
+import { addDocument } from '~/Firebase/service'
 
 const cx = classNames.bind(styles)
-const {Title} = Typography
+const { Title } = Typography
 var fbProvider = new FacebookAuthProvider(auth);
 
 export default function Login() {
-    const handleLogin = () => {
-        signInWithPopup(auth, fbProvider)
+    const handleFbLogin = async () => {
+
+
+        const userCheck = await signInWithPopup(auth, fbProvider)
+
+        if (getAdditionalUserInfo(userCheck).isNewUser) {
+            const { user, providerId } = userCheck
+
+            // addDoc(collection(db, 'users'), {
+            //     displayName: user.displayName,
+            //     photoURL: user.photoURL,
+            //     uid: user.uid,
+            //     providerId: providerId,
+            //     createdAt: serverTimestamp(),
+            // })
+
+            addDocument('users', {
+                displayName: user.displayName,
+                email: user.email,
+                photoURL: user.photoURL,
+                uid: user.uid,
+                providerId: providerId
+            })
+        }
+
     }
-    
     return (
         <div>
             <Row className={cx('justify-center')}>
@@ -26,7 +49,7 @@ export default function Login() {
                         Login by Google
                     </Button >
 
-                    <Button className={cx('w-full mb-2')} onClick={handleLogin}>
+                    <Button className={cx('w-full mb-2')} onClick={handleFbLogin}>
                         Login by Facebook
                     </Button>
                 </Col>
@@ -34,4 +57,5 @@ export default function Login() {
         </div>
     )
 }
+
 
